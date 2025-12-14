@@ -69,32 +69,26 @@ export const getUserSummary = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "User ID is required" });
     }
 
-    // Get total count and sum of amounts
-    const summaryResult = await sql`
+    const balanceResult = await sql`
       SELECT 
-        COUNT(*)::int AS total_transactions,
-        COALESCE(SUM(amount), 0)::float AS total_amount
-      FROM transactions
-      WHERE user_ID = ${user_ID}
+        COALESCE(SUM(amount), 0) as balance FROM transactions  WHERE user_ID = ${user_ID}
     `;
 
-    // Get sum by category
-    const categoriesResult = await sql`
+    const incomeResult = await sql`
+        SELECT 
+            COALESCE(SUM(amount), 0) as income FROM transactions  WHERE user_ID = ${user_ID} AND amount > 0
+        `;
+
+    const expensesResult = await sql`
       SELECT 
-        category,
-        COALESCE(SUM(amount), 0)::float AS total_amount
-      FROM transactions
-      WHERE user_ID = ${user_ID}
-      GROUP BY category
-    `;
+          COALESCE(SUM(amount), 0) as expenses FROM transactions  WHERE user_ID = ${user_ID} AND amount < 0
+      `;
 
-    const summary = {
-      total_transactions: summaryResult[0]?.total_transactions || 0,
-      total_amount: summaryResult[0]?.total_amount || 0,
-      by_category: categoriesResult,
-    };
-
-    res.json(summary);
+    res.status(200).json({
+      balance: balanceResult[0].balance,
+      income: incomeResult[0].income,
+      expenses: expensesResult[0].expenses,
+    });
   } catch (error) {
     res.status(500).json({ message: "Failed to get user summary", error });
   }
