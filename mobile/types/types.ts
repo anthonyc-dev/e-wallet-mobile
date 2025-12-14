@@ -4,7 +4,7 @@ export type Transaction = {
   title: string;
   amount: number;
   category?: string;
-  createdAt: string;
+  created_at: string;
 };
 
 export type TransactionSummary = {

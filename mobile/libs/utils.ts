@@ -11,3 +11,12 @@ export function formatDate(dateInput: string | Date): string {
     day: "numeric",
   });
 }
+
+// utils/formatCurrency.ts
+export const formatPHP = (amount: number | undefined | null): string => {
+  if (amount == null) return "₱0.00";
+  return new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+  }).format(amount);
+};
