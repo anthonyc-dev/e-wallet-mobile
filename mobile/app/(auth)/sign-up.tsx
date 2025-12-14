@@ -22,7 +22,6 @@ export default function SignUpScreen() {
   const onSignUpPress = async () => {
     if (!isLoaded) return;
 
-    // Start sign-up process using email and password provided
     try {
       await signUp.create({
         emailAddress,
@@ -33,12 +32,20 @@ export default function SignUpScreen() {
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
 
       // Set 'pendingVerification' to true to display second form
-      // and capture OTP code
       setPendingVerification(true);
-    } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
+    } catch (err: any) {
       console.error(JSON.stringify(err, null, 2));
+
+      // Clerk structured error handling
+      if (err?.errors?.[0]?.code === "form_identifier_exists") {
+        setError("Email is already registered. Please sign in instead.");
+      } else if (err?.errors?.[0]?.code === "form_password_pwned") {
+        setError("This password has been compromised. Use a different one.");
+      } else if (err?.errors?.[0]?.message) {
+        setError(err.errors[0].message);
+      } else {
+        setError("Sign-up failed. Please try again.");
+      }
     }
   };
 
@@ -56,7 +63,7 @@ export default function SignUpScreen() {
       // and redirect the user
       if (signUpAttempt.status === "complete") {
         await setActive({ session: signUpAttempt.createdSessionId });
-        router.replace("/(auth)/sign-in");
+        router.replace("/(root)");
       } else {
         // If the status is not complete, check why. User may need to
         // complete further steps.

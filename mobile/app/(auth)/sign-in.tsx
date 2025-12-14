@@ -15,32 +15,47 @@ export default function Page() {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Handle the submission of the sign-in form
   const onSignInPress = async () => {
-    if (!isLoaded) return;
+    if (!isLoaded || loading) return; // Prevent multiple clicks
+    setError("");
+    setLoading(true);
 
-    // Start the sign-in process using the email and password provided
     try {
       const signInAttempt = await signIn.create({
         identifier: emailAddress,
         password,
       });
 
-      // If sign-in process is complete, set the created session as active
-      // and redirect the user
       if (signInAttempt.status === "complete") {
+        // Successful login, set session active
         await setActive({ session: signInAttempt.createdSessionId });
-        router.replace("/");
+        router.replace("/"); // Navigate to main/dashboard page
       } else {
-        // If the status isn't complete, check why. User might need to
-        // complete further steps.
-        console.error(JSON.stringify(signInAttempt, null, 2));
+        // Sign-in not complete — could be MFA or verification required
+        console.error(
+          "Sign-in incomplete:",
+          JSON.stringify(signInAttempt, null, 2)
+        );
+        setError("Additional steps are required to sign in. Check your email.");
       }
-    } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+    } catch (err: any) {
+      console.error(err);
+
+      // Clerk structured error handling
+      if (err?.errors?.[0]?.code === "form_identifier_not_found") {
+        setError("Email not registered. Please sign up first.");
+      } else if (err?.errors?.[0]?.code === "form_password_incorrect") {
+        setError("Incorrect password. Please try again.");
+      } else if (err?.errors?.[0]?.message) {
+        setError(err.errors[0].message);
+      } else {
+        setError("Sign-in failed. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,6 +102,7 @@ export default function Page() {
         <TouchableOpacity onPress={onSignInPress} style={styles.button}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
+
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Don&apos;t have an account?</Text>
           <Link href={"/(auth)/sign-up"} asChild>
