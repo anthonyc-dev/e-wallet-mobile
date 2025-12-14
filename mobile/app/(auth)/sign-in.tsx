@@ -1,6 +1,12 @@
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { styles } from "../../assets/styles/auth.styles";
 import { COLORS } from "../../constants/colors";
@@ -19,7 +25,7 @@ export default function Page() {
 
   // Handle the submission of the sign-in form
   const onSignInPress = async () => {
-    if (!isLoaded || loading) return; // Prevent multiple clicks
+    if (!isLoaded || loading) return;
     setError("");
     setLoading(true);
 
@@ -32,9 +38,8 @@ export default function Page() {
       if (signInAttempt.status === "complete") {
         // Successful login, set session active
         await setActive({ session: signInAttempt.createdSessionId });
-        router.replace("/"); // Navigate to main/dashboard page
+        router.replace("/");
       } else {
-        // Sign-in not complete — could be MFA or verification required
         console.error(
           "Sign-in incomplete:",
           JSON.stringify(signInAttempt, null, 2)
@@ -99,8 +104,18 @@ export default function Page() {
           onChangeText={(password) => setPassword(password)}
         />
 
-        <TouchableOpacity onPress={onSignInPress} style={styles.button}>
-          <Text style={styles.buttonText}>Sign In</Text>
+        <TouchableOpacity
+          onPress={onSignInPress}
+          style={[styles.button, loading && { opacity: 0.6 }]}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              "Sign In"
+            )}
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.footerContainer}>
