@@ -17,8 +17,10 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import BalanceCard from "@/components/BalanceCard";
 import TransactionItem from "@/components/TransactionItem";
 import NoTransactionsFound from "@/components/NoTransactionsFound";
+import { useRouter } from "expo-router";
 
 export default function Page() {
+  const router = useRouter();
   const { user } = useUser();
   const [refreshing, setRefreshing] = useState(false);
 
@@ -73,7 +75,10 @@ export default function Page() {
           </View>
           {/* RIGHT */}
           <View style={styles.headerRight}>
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => router.push("/(root)/create")}
+            >
               <Ionicons name="add" size={20} color="#FFF" />
               <Text style={styles.addButtonText}>Add</Text>
             </TouchableOpacity>
