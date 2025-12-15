@@ -69,6 +69,11 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 4,
   },
+  buttonAddCircle: {
+    color: COLORS.white,
+    fontWeight: "600",
+    textAlign: "center",
+  },
   logoutButton: {
     padding: 10,
     borderRadius: 20,

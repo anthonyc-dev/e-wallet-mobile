@@ -150,7 +150,7 @@ export default function SignUpScreen() {
     >
       <View style={styles.container}>
         <Image
-          source={require("../../assets/images/revenue-i2.png")}
+          source={require("../../assets/images/2.png")}
           contentFit="cover"
           style={styles.illustration}
         />

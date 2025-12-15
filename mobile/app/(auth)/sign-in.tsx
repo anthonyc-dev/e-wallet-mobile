@@ -74,7 +74,7 @@ export default function Page() {
     >
       <View style={styles.container}>
         <Image
-          source={require("../../assets/images/revenue-i4.png")}
+          source={require("../../assets/images/1.png")}
           contentFit="cover"
           style={styles.illustration}
         />

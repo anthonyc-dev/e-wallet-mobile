@@ -62,7 +62,7 @@ export default function Page() {
           {/* LEFT */}
           <View style={styles.headerLeft}>
             <Image
-              source={require("../../assets/images/logo.png")}
+              source={require("../../assets/images/3.png")}
               contentFit="cover"
               style={styles.headerLogo}
             />
