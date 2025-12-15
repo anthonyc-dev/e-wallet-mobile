@@ -51,11 +51,25 @@ const oceanTheme = {
   shadow: "#000000",
 };
 
+const demonTheme = {
+  primary: "#D32F2F",
+  background: "#0D0D0D",
+  text: "#F5F5F",
+  border: "#2A2A2A",
+  white: "#00000",
+  textLight: "#9E9E9E",
+  expense: "#EF5350",
+  income: "#66BB6A",
+  card: "#1A1A1A",
+  shadow: "#000000",
+};
+
 export const THEMES = {
   coffee: coffeeTheme,
   forest: forestTheme,
   purple: purpleTheme,
   ocean: oceanTheme,
+  demon: demonTheme,
 };
 
 // 👇 change this to switch theme
