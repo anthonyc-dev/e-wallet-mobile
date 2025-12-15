@@ -89,14 +89,39 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,
-    shadowColor: COLORS.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    position: "relative",
+    overflow: "hidden",
     shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
+  },
+  balanceAccent: {
+    position: "absolute",
+    right: -60,
+    top: -60,
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: COLORS.primary,
+    opacity: 0.08,
+  },
+  balanceHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  balanceBadge: {
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 14,
+  },
+  balanceBadgeText: {
+    color: COLORS.white,
+    fontWeight: "700",
+    fontSize: 12,
+    letterSpacing: 0.2,
   },
   balanceTitle: {
     fontSize: 16,
@@ -109,13 +134,59 @@ export const styles = StyleSheet.create({
     color: COLORS.text,
     marginBottom: 20,
   },
+  balanceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  netBadge: {
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: COLORS.card,
+  },
+  netBadgePositive: {
+    borderColor: COLORS.income,
+  },
+  netBadgeNegative: {
+    borderColor: COLORS.expense,
+  },
+  netBadgeText: {
+    fontWeight: "700",
+    fontSize: 13,
+  },
+  netBadgeTextPositive: {
+    color: COLORS.income,
+  },
+  netBadgeTextNegative: {
+    color: COLORS.expense,
+  },
+  netRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 8,
+    marginBottom: 16,
+  },
+  netLabel: {
+    fontSize: 13,
+    color: COLORS.textLight,
+  },
+  netAmount: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
   balanceStats: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 4,
   },
   balanceStatItem: {
     flex: 1,
     alignItems: "center",
+    paddingVertical: 6,
   },
   statDivider: {
     borderRightWidth: 1,
@@ -129,6 +200,28 @@ export const styles = StyleSheet.create({
   balanceStatAmount: {
     fontSize: 18,
     fontWeight: "600",
+  },
+  statIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.background,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  statIconIncome: {
+    borderColor: COLORS.income,
+  },
+  statIconExpense: {
+    borderColor: COLORS.expense,
+  },
+  statIconSymbol: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: COLORS.text,
   },
   sectionTitle: {
     fontSize: 18,
