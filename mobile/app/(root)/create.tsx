@@ -72,7 +72,7 @@ const CreateScreen = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.log(errorData);
-        throw new Error(errorData.error || "Failed to create transaction");
+        throw new Error(errorData.error || "Failed to create transactions");
       }
 
       Alert.alert("Success", "Transaction created successfully");
