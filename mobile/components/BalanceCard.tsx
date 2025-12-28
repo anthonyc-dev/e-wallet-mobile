@@ -27,6 +27,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ summary }) => {
           </View>
         </View>
 
+        {/* commient */}
         <View style={styles.balanceRow}>
           <Text style={styles.balanceAmount}>{formatPHP(balance)}</Text>
           <View
